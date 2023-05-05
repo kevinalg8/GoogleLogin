@@ -22,7 +22,7 @@ loginRouter.get("/google", (req, res)=> {
 
     res.cookie("ckswf", token);
 
-    res.redirect("/dashboard/inicio")
+    res.redirect("/v1/inicio")
     // res.render("ba", {
     //     nombre:name
         

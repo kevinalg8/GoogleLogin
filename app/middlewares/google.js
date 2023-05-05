@@ -16,11 +16,5 @@ passport.use(
   function(accessToken, refreshToken, profile, cb) {
 
     return cb(null, profile);
-    // const response=emails.includes(profile.emails[0].value);
-    // if(response){
-    //     cb(null, profile);
-    // }else {
-    //     emails.push(profile.emails[0])
-    // }
   }
 ));

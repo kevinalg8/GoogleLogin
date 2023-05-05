@@ -11,7 +11,8 @@ dash.get("/inicio", (req, res) => {
         const token = jwt.verify(req.cookies.ckswf, process.env.SECRET_KEY);
         res.render("dash", {
             "nombre":token.nombre,
-            "foto":token.foto
+            "foto":token.foto,
+            "menu": 0
         });
 
     } catch (error) {
@@ -22,6 +23,26 @@ dash.get("/inicio", (req, res) => {
         res.redirect("/");
     }
 });
+
+dash.get("/Usuarios", (req, res) => {
+    if (req.cookies.ckswf){
+    try {
+        const token = jwt.verify(req.cookies.ckswf, process.env.SECRET_KEY);
+        res.render("dash", {
+            "nombre":token.nombre,
+            "foto":token.foto,
+            "menu": 1
+        });
+
+    } catch (error) {
+        res.redirect("/");
+    }
+
+    } else {
+        res.redirect("/");
+    }
+});
+
 
 dash.get("/salir", (req, res) => {
     res.clearCookie("ckswf");

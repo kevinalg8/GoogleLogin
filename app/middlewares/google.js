@@ -3,7 +3,7 @@ import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
 import dotenv from 'dotenv';
 dotenv.config();
 
-const emails = ["saranicky2004@gmail.com"];
+const emails = ["kalondono35@misena.edu.co"];
 
 
 passport.use(

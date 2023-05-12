@@ -2,7 +2,7 @@ import { Router } from "express";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
 import fetch from 'node-fetch'
-import { response } from "express";
+
 
 dotenv.config();
 
@@ -45,8 +45,6 @@ dash.get("/Usuarios", async(req, res) => {
         .catch(err => console.error("Error en la peticion" +err));
 
 
-
-
         res.render("dash", {
             "nombre":token.nombre,
             "foto":token.foto,
@@ -62,7 +60,39 @@ dash.get("/Usuarios", async(req, res) => {
         res.redirect("/");
     }
 });
+//Hay que instalar llamada body parser
+dash.post("/guardar", (req, res)=>{
+    if (req.body.name) {
+        let data ={  
+            name:req.body.name    
+        }
+        //res.send("Guardado exitosamente")
+        let ruta = 'http://localhost:3000/apiUser/users';
+        let method = "POST";
 
+        let option = {
+            method: method,
+            headers:{
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(data)
+        }
+        try {
+            const result = fetch(ruta, option)
+            .then(res=>res.json())
+            .then(data=>{
+                console.log("Datos Guardados");
+            })
+            .catch (err =>console.log("erro al consumir la API"+ err))
+            res.redirect("/v1/usuario")
+            
+        } catch (error) {
+            
+        }
+    }else{
+        res.send("error")
+    }
+});
 
 dash.get("/salir", (req, res) => {
     res.clearCookie("ckswf");

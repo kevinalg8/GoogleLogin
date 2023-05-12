@@ -20,7 +20,31 @@
           </div>
         </div>
         <div class="box-body">
-          Start creating your amazing application!
+          <table id="example2" class="table table-bordered table-hover">
+            <thead>
+            <tr>
+              <th>CODIGO</th>
+              <th>NOMBRE</th>
+              <th>ACCION</th>
+            </tr>
+            </thead>
+            <tbody>
+              <% datos.forEach((elements)=>{%>
+            <tr>
+              <td><%=elements.ID%></td>
+              <td><%=elements.NAME%></td>
+              <td>
+                <button class="btn btn-warning">
+                  <i class="fa fa-edit"></i>
+                </button>
+                <button class="btn btn-danger">
+                  <i class="fa fa-trash"></i>
+                </button>
+              </td>
+            </tr>
+            <% }) %>
+            </tbody>
+          </table>
         </div>
         <!-- /.box-body -->
         <div class="box-footer">

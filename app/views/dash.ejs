@@ -16,6 +16,11 @@
     <!-- Content Wrapper with partial -->
     <%-include ("./partials/dashUser.ejs")%>
     <%}%>
+  
+    <%if (menu==4){%>
+      <!-- Content Wrapper with partial -->
+      <%-include ("./partials/dashEditUser.ejs")%>
+      <%}%>
   <!-- Footer con Partial -->
   <%- include ("./partials/dashfooter.ejs")%>
 </div>

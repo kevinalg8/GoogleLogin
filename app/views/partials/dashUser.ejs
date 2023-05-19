@@ -35,9 +35,9 @@
               <td><%=elements.ID%></td>
               <td><%=elements.NAME%></td>
               <td>
-                <button class="btn btn-warning">
+                <a href="edit-user?id=<%= elements.ID %>&name=<%= elements.NAME %>" class="btn btn-warning">
                   <i class="fa fa-edit"></i>
-                </button>
+                </a>
                 <button class="btn btn-danger">
                   <i class="fa fa-trash"></i>
                 </button>
@@ -49,7 +49,7 @@
         </div>
         <!-- /.box-body -->
         <div class="box-footer">
-          Total de usuarios: 
+          Total de usuarios:
         </div>
         <!-- /.box-footer-->
       </div>

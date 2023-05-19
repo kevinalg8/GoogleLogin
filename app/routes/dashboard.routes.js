@@ -61,17 +61,28 @@ dash.get("/Usuarios", async(req, res) => {
     }
 });
 //Hay que instalar llamada body parser
+
+//Insertar usuarios
 dash.post("/guardar", (req, res)=>{
     if (req.body.name) {
         let data ={  
-            name:req.body.name    
+            name:req.body.name
+        }
+        let metodo = "POST";
+        //Dede aqui podemos modificar los datos de cada
+        if(req.body.id){
+            data={  
+                id:req.body.id,
+                name:req.body.name
+            }
+            metodo = "PUT"
         }
         //res.send("Guardado exitosamente")
         let ruta = 'http://localhost:3000/apiUser/users';
-        let method = "POST";
+        //let method = "POST";
 
         let option = {
-            method: method,
+            method: metodo,
             headers:{
                 "Content-Type": "application/json"
             },
@@ -84,7 +95,7 @@ dash.post("/guardar", (req, res)=>{
                 console.log("Datos Guardados");
             })
             .catch (err =>console.log("erro al consumir la API"+ err))
-            res.redirect("/v1/usuario")
+            res.redirect("/v1/usuarios")
             
         } catch (error) {
             
@@ -93,6 +104,29 @@ dash.post("/guardar", (req, res)=>{
         res.send("error")
     }
 });
+dash.get("/edit-user",(req, res)=>{
+    const id = req.query.id;
+    const name = req.query.name;
+
+    let datos = {
+        id:id,
+        name:name
+    }
+    //res.send(id + " " + name)
+    if (req.cookies.ckswf) {
+        try {
+            const token = jwt.verify(req.cookies.ckswf, process.env.SECRET_KEY);
+            res.render("dash", {
+                "nombre":token.nombre,
+                "foto":token.foto,
+                "menu": 4,
+                "datos": datos
+            });
+        } catch (error) {
+            console.log("Error Inicie Sesion ");
+        }
+    }
+})
 
 dash.get("/salir", (req, res) => {
     res.clearCookie("ckswf");

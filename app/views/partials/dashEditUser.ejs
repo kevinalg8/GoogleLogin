@@ -16,7 +16,7 @@
         </div>
       </div>
       <div class="box-body">
-        <form action="guardar" method="POST">
+        <form action="guardar" method="POST" id="formulario">
           <!-- Poner valores al input -->
           <div class="form-group">
             <label>ID</label>
@@ -30,8 +30,8 @@
       </div>
       <!-- /.box-body -->
       <div class="box-footer">
-        <button class="btn btn-success" type="submit">
-          <i class="fa fa-save" onclick="confirmEdit(`<%= datos.name%>`)">Save</i>
+        <button class="btn btn-success" type="submit" onclick="confirmEdit()">
+          <i class="fa fa-save">Save</i>
         </button>
         <button class="btn btn-danger">
           <i class="fa fa-times">Cancel</i>
@@ -44,24 +44,30 @@
 
   </section>
   <script>
-    function confirmEdit(name) {
-      Swal.fire({
-        title: '¿Estas seguto?',
-        text: `Deseas modificar el usuario: ${name}`,
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Si'
-      }).then((result) => {
-        if (result.isConfirmed) {
-          window.location.href = `borrar?id=${name}`;
-          Swal.fire(
-            'Modificado',
-            'El usuario a sido modificado',
-            'success'
-          )
-        }
+    function confirmEdit() {
+      const formu = document.querySelector("#formulario");
+      formu.addEventListener("submit",(event)=>{
+        //Cancelar envio
+        event.preventDefault();
+        Swal.fire({
+          title: '¿Estas seguto?',
+          text: `¿Deseas modificar el usuario?`,
+          icon: 'question',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Si'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            //window.location.href = `edit-user?name=${name}`;
+            formu.submit();
+            Swal.fire(
+              'Modificado',
+              `Usuario sido modificado`,
+              'success'
+            )
+          }
+        })
       })
     }
   </script>

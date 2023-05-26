@@ -1,13 +1,14 @@
 import { Router } from "express";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
-import fetch from 'node-fetch'
-
+import fetch from 'node-fetch';
+//import SweetAlert  from "sweetalert2";
+import Swal from "sweetalert2";
 
 dotenv.config();
 
 const dash = Router();
-
+//Ruta de inicio
 dash.get("/inicio", (req, res) => {
     if (req.cookies.ckswf){
     try {
@@ -60,8 +61,6 @@ dash.get("/Usuarios", async(req, res) => {
         res.redirect("/");
     }
 });
-//Hay que instalar llamada body parser
-
 //Insertar usuarios
 dash.post("/guardar", (req, res)=>{
     if (req.body.name) {
@@ -104,6 +103,7 @@ dash.post("/guardar", (req, res)=>{
         res.send("error")
     }
 });
+//Editar usuarios
 dash.get("/edit-user",(req, res)=>{
     const id = req.query.id;
     const name = req.query.name;
@@ -112,7 +112,7 @@ dash.get("/edit-user",(req, res)=>{
         id:id,
         name:name
     }
-    //res.send(id + " " + name)
+
     if (req.cookies.ckswf) {
         try {
             const token = jwt.verify(req.cookies.ckswf, process.env.SECRET_KEY);
@@ -127,7 +127,37 @@ dash.get("/edit-user",(req, res)=>{
         }
     }
 })
+//Borrar Usuarios
+dash.get("/borrar",  async(req, res)=>{
+    const id = req.query.id
+    if (req.cookies.ckswf) {
+        try {
+            const token = jwt.verify(req.cookies.ckswf, process.env.SECRET_KEY);
 
+            const url =`http://localhost:3000/apiUser/users/${id}`
+
+            const option ={
+                method: "DELETE"
+            }
+            const result = await fetch (url, option)
+            .then(response => response.json())
+            .then(data =>{
+                //console.log(data);
+                if (data[0].affectedRows==1) {
+                    //Swal.fire('Usuario Borrado Correctamente')
+                    //console.log("Usuario Borrado Correctamente");
+                }else{
+                    console.log("No se logro borrar el usuario indicado");
+                }
+            })
+            res.redirect("/v1/usuarios")
+        } catch (error) {
+            console.log(`Error Inicie Sesion ${error}`);
+        }
+    }
+    //res.send({"datos":id})
+})
+//Cerrar o salir la cookie
 dash.get("/salir", (req, res) => {
     res.clearCookie("ckswf");
     res.redirect("/");

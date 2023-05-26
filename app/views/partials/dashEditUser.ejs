@@ -1,46 +1,68 @@
+<link rel="stylesheet" href="sweetalert2.min.css">
 <div class="content-wrapper">
-    <section class="content-header">
-        <h1>Modificar Usuarios</h1>
-      </section>
-      <section class="content">
-        <!-- Default box -->
-        <div class="box">
-          <div class="box-header with-border">
+  <section class="content-header">
+    <h1>Modificar Usuarios</h1>
+  </section>
+  <section class="content">
+    <!-- Default box -->
+    <div class="box">
+      <div class="box-header with-border">
 
-            <div class="box-tools pull-right">
-              <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip"
-                      title="Collapse">
-                <i class="fa fa-minus"></i></button>
-              <button type="button" class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="Remove">
-                <i class="fa fa-times"></i></button>
-            </div>
-          </div>
-          <div class="box-body">
-            <form action="guardar" method="POST">
-            <!-- Poner valores al input -->
-              <div class="form-group">
-                  <label>ID</label>
-                  <input name="id" type="text" class="form-control" placeholder="ID" value="<%= datos.id%>" readonly>
-              </div>
-              <div class="input-group">
-                  <span class="input-group-addon">@</span>
-                  <input name="name" type="text" class="form-control" value="<%= datos.name%>"  placeholder="Username">
-
-              </div>
-          </div>
-          <!-- /.box-body -->
-          <div class="box-footer">
-            <button class="btn btn-success" type="submit">
-              <i class="fa fa-save">Save</i>
-            </button>
-            <button class="btn btn-danger">
-              <i class="fa fa-times" >Cancel</i>
-            </button>
-          </div>
-        </form>
-          <!-- /.box-footer-->
+        <div class="box-tools pull-right">
+          <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
+            <i class="fa fa-minus"></i></button>
+          <button type="button" class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="Remove">
+            <i class="fa fa-times"></i></button>
         </div>
-        <!-- /.box -->
-  
-      </section>
+      </div>
+      <div class="box-body">
+        <form action="guardar" method="POST">
+          <!-- Poner valores al input -->
+          <div class="form-group">
+            <label>ID</label>
+            <input name="id" type="text" class="form-control" placeholder="ID" value="<%= datos.id%>" readonly>
+          </div>
+          <div class="input-group">
+            <span class="input-group-addon">Nombre:</span>
+            <input name="name" type="text" class="form-control" value="<%= datos.name%>" placeholder="Username">
+
+          </div>
+      </div>
+      <!-- /.box-body -->
+      <div class="box-footer">
+        <button class="btn btn-success" type="submit">
+          <i class="fa fa-save" onclick="confirmEdit(`<%= datos.name%>`)">Save</i>
+        </button>
+        <button class="btn btn-danger">
+          <i class="fa fa-times">Cancel</i>
+        </button>
+      </div>
+      </form>
+      <!-- /.box-footer-->
     </div>
+    <!-- /.box -->
+
+  </section>
+  <script>
+    function confirmEdit(name) {
+      Swal.fire({
+        title: '¿Estas seguto?',
+        text: `Deseas modificar el usuario: ${name}`,
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Si'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          window.location.href = `borrar?id=${name}`;
+          Swal.fire(
+            'Modificado',
+            'El usuario a sido modificado',
+            'success'
+          )
+        }
+      })
+    }
+  </script>
+</div>
